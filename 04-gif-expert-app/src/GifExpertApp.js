@@ -4,7 +4,12 @@ import GifGrid from './components/GifGrid';
 
 const GifExpertApp = () => {
     //const categories = ['One puch', 'Samurai X', 'Dragon Ball']
-    const [categories, setCategories] = useState(['Samurai X'])
+    const [categories, setCategories] = useState([
+        {
+            filter: 5,
+            query:'Samurai X'
+        }
+    ])
 
     /*const handleAdd = () => {
         setCategories([...categories, 'Naruto'])
@@ -19,8 +24,9 @@ const GifExpertApp = () => {
                 {
                     categories.map((category, i) => 
                         <GifGrid 
-                            category = {category}
-                            key = {category}
+                            query = {category.query}
+                            filter = {category.filter}
+                            key = {category.query}
                         />)
                 }
             </ol>

@@ -2,17 +2,29 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 
 const AddCategory = ({setCategories}) => {
-    const [inputValue, setinputValue] = useState('')
+    const [inputValue, setinputValue] = useState({input: '', select: 5})
     
     const handleInputChange = (e) => {
-        setinputValue(e.target.value)
+        const inputNew = {...inputValue}
+        inputNew.input = e.target.value
+        setinputValue(inputNew)
+    }
+
+    const handleSelectChange = (e) => {
+        const inputNew = {...inputValue}
+        inputNew.select = e.target.value
+        setinputValue(inputNew)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (inputValue.trim().length > 2) {
-            setCategories(categories => [...categories, inputValue])
-            setinputValue('')
+        if (inputValue.input.trim().length > 2) {
+            const newCategory = {
+                filter: parseInt(inputValue.select),
+                query: inputValue.input
+            }
+            setCategories(categories => [newCategory, ...categories])
+            setinputValue({input: '', select: 5})
         }
     }
 
@@ -20,9 +32,17 @@ const AddCategory = ({setCategories}) => {
         <form onSubmit={handleSubmit}>
             <input
                 type="text"
-                value={inputValue}
+                value={inputValue.input || ''}
                 onChange={handleInputChange}
             />
+            <select 
+                value={inputValue.select || ''}
+                onChange={handleSelectChange}
+            >
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+            </select>
         </form>
     )
 }
